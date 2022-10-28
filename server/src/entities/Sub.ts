@@ -8,6 +8,7 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
+import Post from "./Post";
 import { User } from "./User";
 
 @Entity("subs")
@@ -35,7 +36,7 @@ export default class Sub extends BaseEntity {
   @JoinColumn({ name: "username", referencedColumnName: "username" }) // 외래 키 속성명 : name(line32), 참조 엔터티의 참조 속성명 : referencedColumnName(User.ts 내부)
   user: User;
 
-  @OneToMany(() => postMessage, (post) => post.sub)
+  @OneToMany(() => Post, (post) => post.sub)
   post: Post[];
 
   @Expose()

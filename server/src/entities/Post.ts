@@ -11,7 +11,10 @@ import {
   OneToMany,
 } from "typeorm";
 import { makeId, slugify } from "../utils/helpers";
+import Comment from "./Comment";
+import Sub from "./Sub";
 import { User } from "./User";
+import Vote from "./Vote";
 
 @Entity("post")
 export default class Post extends BaseEntity {
@@ -39,16 +42,18 @@ export default class Post extends BaseEntity {
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
 
-  @ManyToOne(() => Sub, (sub) => sub.posts)
+  @ManyToOne(() => Sub, (sub) => sub.post)
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Sub;
 
   @Exclude() // 프론트로 넘겨줄 때 얘는 빼고 주자
   @OneToMany(() => Comment, (comment) => comment.post)
-  comments: Comment[];
+  comment: Comment[];
 
   @Exclude() // 프론트로 넘겨줄 때 얘는 빼고 주자
-  @OneToMany(() => ValidationTypes, (vote) => vote.post)
+  @OneToMany(() => Vote, (vote) => vote.post)
+  vote: Vote[];
+
   @Expose()
   get url(): string {
     return `/r/${this.subName}/${this.identifier}/${this.slug})`;
@@ -56,19 +61,19 @@ export default class Post extends BaseEntity {
 
   @Expose() // expose 없으면 프론트에서 URL 정보를 받을 수 없음!
   get commentCount(): number {
-    return this.comments?.length;
+    return this.comment?.length;
   }
 
   @Expose() // expose 없으면 프론트에서 URL 정보를 받을 수 없음!
   get voteScore(): number {
-    return this.votes?.reduce((memo, curt) => memo + (curt.value || 0), 0);
+    return this.vote?.reduce((memo, curt) => memo + (curt.value || 0), 0);
   }
 
   protected userVote: number;
 
   setUserVote(user: User) {
-    const index = this.votes?.findIndex((v) => v.username === user.username);
-    this.userVote = index > -1 ? this.votes[index].value : 0;
+    const index = this.vote?.findIndex((v) => v.username === user.username);
+    this.userVote = index > -1 ? this.vote[index].value : 0;
   }
 
   @BeforeInsert()
