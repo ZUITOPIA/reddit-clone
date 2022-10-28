@@ -1,7 +1,6 @@
 import { Exclude, Expose } from "class-transformer";
-import { ValidationTypes } from "class-validator";
+import BaseEntity from "./Entity";
 import {
-  BaseEntity,
   BeforeInsert,
   Column,
   Entity,
@@ -13,10 +12,10 @@ import {
 import { makeId, slugify } from "../utils/helpers";
 import Comment from "./Comment";
 import Sub from "./Sub";
-import { User } from "./User";
+import User from "./User";
 import Vote from "./Vote";
 
-@Entity("post")
+@Entity("posts")
 export default class Post extends BaseEntity {
   @Index()
   @Column()

@@ -1,6 +1,6 @@
 import { Exclude, Expose } from "class-transformer";
+import BaseEntity from "./Entity";
 import {
-  BaseEntity,
   BeforeInsert,
   Column,
   Entity,
@@ -11,10 +11,10 @@ import {
 } from "typeorm";
 import { makeId } from "../utils/helpers";
 import Post from "./Post";
-import { User } from "./User";
+import User from "./User";
 import Vote from "./Vote";
 
-@Entity("comment")
+@Entity("comments")
 export default class Comment extends BaseEntity {
   @Index()
   @Column()
