@@ -1,30 +1,35 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import InputGroup from "../components/InputGroup";
 
-const register = () => {
+const Register = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<any>({}); // 빨간줄 없애려고 잠깐만 any로 타입지정
+
   return (
     <div className="bg-white">
       <div className="flex flex-col items-center justify-center h-screen p-6">
         <div className="w-10/12 mx-auto md:w-96">
           <h1 className="mb-2 text-lg font-medium">회원가입</h1>
-          <form onSubmit={handleSubmit}>
+          <form>
             <InputGroup
               placeholder="Email"
               value={email}
-              setValue={email}
+              setValue={setEmail}
               error={errors.email}
             />
             <InputGroup
               placeholder="Username"
               value={username}
-              setValue={username}
+              setValue={setUsername}
               error={errors.username}
             />
             <InputGroup
               placeholder="Password"
               value={password}
-              setValue={password}
+              setValue={setPassword}
               error={errors.password}
             />
             <button
@@ -47,4 +52,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
