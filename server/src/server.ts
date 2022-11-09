@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import { AppDataSource } from "./data-source";
-import authRoutes from "../routes/auth";
+import authRoutes from "./routes/auth";
 import cors from "cors";
 
 import dotenv from "dotenv";
