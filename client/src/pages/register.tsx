@@ -58,7 +58,7 @@ const Register = () => {
                 "w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded"
               }
             >
-              Sign Up
+              회원가입
             </button>
           </form>
           <small>
