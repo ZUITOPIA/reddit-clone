@@ -88,7 +88,16 @@ const login = async (req: Request, res: Response) => {
 
     // 쿠키 저장
     // var setCookie = cookie.serialize('foo','bar');
-    res.set("Set-Cookie", cookie.serialize("token", token));
+    res.set(
+      "Set-Cookie",
+      cookie.serialize("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+        path: "/",
+      })
+    );
     return res.json({ user, token });
   } catch (error) {
     console.log(error);
@@ -104,3 +113,15 @@ export default router;
 
 // 쿠키의 이름과 값은 항상 인코딩해야함.
 // 쿠키 하나가 차지하는 용량은 최대 4KB까지이고, 사이트 하나당 약 20여개를 허용함(브라우저에 따라 다름)
+
+// httpOnly
+// > 이 옵션은 자바스크립트 같은 클라이언트 측 스크립트가 쿠키를 사용할 수 없게 함, document.cookie를 통해 쿠키를 볼 수도 없고 조작할 수도 없음
+
+// secure
+// > HTTPS 연결에서만 쿠키를 사용할 수 있게 함
+
+// samesite
+// > 요청이 외부 사이트에서 일어날 때, 브라우저가 쿠키를 보내지 못하도록 막아줌, XSRF 공격을 막는데 유용함
+
+// expires/max-age
+// > 쿠키의 만료 시간을 정해줌, 이 옵션이 없으면 브라우저가 닫힐 때 쿠키도 같이 삭제 됨
