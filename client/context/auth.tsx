@@ -3,7 +3,7 @@
 
 // context 에 있는 value를 다른 컴포넌트에서 사용하기 위해서는 사용할 컴포넌트들이 존재하는 파일을 Context provider 로 감싸줘야함
 
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { User } from "../src/types";
 
 interface State {
@@ -56,6 +56,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loading: true,
   });
 
+  console.log("state", state);
+
+  const dispatch = (type: string, payload?: any) => {
+    defaultDispatch({ type, payload });
+  };
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>{children}</StateContext.Provider>
@@ -64,3 +70,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 // 좀 더 복잡한 useState를 사용하고 싶을 때? useReducer 사용
+
+export const useAuthState = () => useContext(StateContext);
+export const useAuthDispatch = () => useContext(DispatchContext);

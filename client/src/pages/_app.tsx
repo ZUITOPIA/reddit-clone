@@ -1,5 +1,5 @@
-// import "../styles/globals.css";
-import styled from "styled-components";
+import "../styles/globals.css";
+// import styled from "styled-components";
 import type { AppProps } from "next/app";
 import Axios from "axios";
 import { AuthProvider } from "../../context/auth";

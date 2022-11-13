@@ -3,12 +3,15 @@ import InputGroup from "../components/InputGroup";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useAuthDispatch } from "../../context/auth";
 
 const Login = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
+
+  const dispatch = useAuthDispatch();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -19,6 +22,8 @@ const Login = () => {
         { password, username },
         { withCredentials: true }
       );
+      dispatch("LOGIN", res.data?.user);
+      router.push("/");
 
       // 로그인 시에 아이디와 비밀번호가 서버로 넘어가면 유저의 정보가 맞는지 확인한 후 cookie에 token을 발급함.
       // 그 후 다른 페이지에서의 인증도 이 token을 통해 인증이 이뤄지게 됨
