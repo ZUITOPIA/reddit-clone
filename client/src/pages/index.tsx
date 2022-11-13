@@ -1,9 +1,21 @@
 import type { NextPage } from "next";
-// import styles from "../styles/Home.module.css";
-// import { Text } from "../components/ui";
+import styled from "styled-components";
+import { Text } from "../components/ui";
 
 const Home: NextPage = () => {
-  return <h1>Hello world! </h1>;
+  return (
+    <Wrapper>
+      <Text.TitleText>Hello world! </Text.TitleText>
+    </Wrapper>
+  );
 };
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  .title {
+    font-weight: 800;
+  }
+`;
 
 export default Home;

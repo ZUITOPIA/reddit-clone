@@ -1,15 +1,22 @@
 import "../styles/globals.css";
-// import styled from "styled-components";
 import type { AppProps } from "next/app";
 import Axios from "axios";
 import { AuthProvider } from "../../context/auth";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "../styles/global-style";
+import { theme } from "../styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </ThemeProvider>
+    </>
   );
 }
 
