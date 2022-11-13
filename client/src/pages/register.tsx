@@ -3,13 +3,17 @@ import React, { FormEvent, useState } from "react";
 import InputGroup from "../components/InputGroup";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useAuthState } from "../../context/auth";
 
 const Register = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({}); // 빨간줄 없애려고 잠깐만 any로 타입지정
-  const router = useRouter();
+
+  const { authenticated } = useAuthState();
+  if (authenticated) router.push("/");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();

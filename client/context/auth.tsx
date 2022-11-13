@@ -3,7 +3,8 @@
 
 // context 에 있는 value를 다른 컴포넌트에서 사용하기 위해서는 사용할 컴포넌트들이 존재하는 파일을 Context provider 로 감싸줘야함
 
-import { createContext, useContext, useReducer } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { User } from "../src/types";
 
 interface State {
@@ -61,6 +62,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = (type: string, payload?: any) => {
     defaultDispatch({ type, payload });
   };
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const res = await axios.get("/auth/me");
+        dispatch("LOGIN", res.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        dispatch("STOP_LOADING");
+      }
+    }
+  }, []);
 
   return (
     <DispatchContext.Provider value={dispatch}>
