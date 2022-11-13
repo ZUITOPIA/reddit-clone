@@ -4,12 +4,20 @@ import User from "../entities/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
+import userMiddleware from "../middlewares/user";
+import authMiddleware from "../middlewares/auth";
 
 const mapErrors = (errors: Object[]) => {
   return errors.reduce((prev: any, err: any) => {
     prev[err.property] = Object.entries(err.constraints)[0][1];
     return prev;
   }, {});
+};
+
+const me = async (_: Request, res: Response) => {
+  return res.json(res.locals.user); // userMiddleware 에서 넣어 준 것
+
+  // req 사용 안 할 때 _ 로 사용
 };
 
 // register 핸들러
@@ -106,6 +114,7 @@ const login = async (req: Request, res: Response) => {
 };
 
 const router = Router();
+router.post("/me", userMiddleware, authMiddleware, me);
 router.post("/register", register); // register 라는 핸들러를 이용할 것
 router.post("/login", login);
 
