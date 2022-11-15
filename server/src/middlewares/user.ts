@@ -17,7 +17,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     if (!user) throw new Error("Unauthenticated");
     // 유저 정보를 res.locals.user 에 넣어주기
     res.locals.user = user;
-
     return next();
   } catch (error) {
     console.log(error);

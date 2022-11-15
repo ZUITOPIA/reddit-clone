@@ -67,7 +67,7 @@ const Login = () => {
             </button>
           </form>
           <small>
-            이미 아이디가 없으신가요?
+            아직 아이디가 없으신가요?
             <Link href="/register">
               <a className="ml-1 text-blue-500 uppercase">회원가입</a>
             </Link>
