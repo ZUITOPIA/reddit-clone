@@ -1,8 +1,6 @@
 import axios from "axios";
-import Image from "next/image";
 import Link from "next/link";
 import { useAuthDispatch, useAuthState } from "../../context/auth";
-// import { FaSearch } from "react-icons/fa";
 
 const NavBar: React.FC = () => {
   const { loading, authenticated } = useAuthState();
